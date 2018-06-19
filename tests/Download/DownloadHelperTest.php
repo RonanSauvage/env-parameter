@@ -5,6 +5,7 @@ namespace App\Tests\Download;
 use App\Download\DownloadableInterface;
 use App\Download\DownloadHelper;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class DownloadHelperTest extends KernelTestCase
 {
@@ -17,8 +18,12 @@ class DownloadHelperTest extends KernelTestCase
         $uploadDirData = 'upload/files/';
         $fileData = 'AZERT1234';
 
-        $downloadHelper = new DownloadHelper();
-        $downloadHelper->uploadDir = $uploadDirData;
+        $parameterBagInterface = $this->createMock(ParameterBagInterface::class);
+        $parameterBagInterface->expects($this->once())
+            ->method('get')
+            ->willReturn($uploadDirData);
+
+        $downloadHelper = new DownloadHelper($parameterBagInterface);
 
         $fileTest = new TestFile();
         $fileTest->setFile($fileData);
@@ -26,7 +31,7 @@ class DownloadHelperTest extends KernelTestCase
         $expected = $uploadDirData . $fileData;
 
         $result = $downloadHelper->getUploadPath($fileTest);
-        $this->assertEquals($expected, $result, 'The directory to doowload one resource fail');
+        $this->assertEquals($expected, $result, 'The directory to download one resource fail');
     }
 }
 
