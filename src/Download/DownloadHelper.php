@@ -2,8 +2,6 @@
 
 namespace App\Download;
 
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
-
 /**
  * Class DownloadHelper
  * @package App\Download
@@ -12,17 +10,17 @@ class DownloadHelper
 {
 
     /**
-     * @var ParameterBagInterface
+     * @var string
      */
-    private $params;
+    private $path;
 
     /**
      * DownloadHelper constructor.
-     * @param ParameterBagInterface $parameterBag
+     * @param string $pathDownload
      */
-    public function __construct(ParameterBagInterface $parameterBag)
+    public function __construct(string $pathDownload)
     {
-        $this->params = $parameterBag;
+        $this->path = $pathDownload;
     }
 
     /**
@@ -31,6 +29,6 @@ class DownloadHelper
      */
     public function getUploadPath(DownloadableInterface $resource): string{
 
-        return $this->params->get('upload_dir') . $resource->getFile();
+        return $this->path . $resource->getFile();
     }
 }

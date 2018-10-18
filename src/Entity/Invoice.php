@@ -22,16 +22,26 @@ class Invoice implements DownloadableInterface
      */
     private $file;
 
+    /**
+     * @return integer
+     */
     public function getId()
     {
         return $this->id;
     }
 
+    /**
+     * @return null|string
+     */
     public function getFile(): ?string
     {
         return $this->file;
     }
 
+    /**
+     * @param string $file
+     * @return Invoice
+     */
     public function setFile(string $file): self
     {
         $this->file = $file;

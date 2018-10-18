@@ -5,7 +5,6 @@ namespace App\Tests\Download;
 use App\Download\DownloadableInterface;
 use App\Download\DownloadHelper;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class DownloadHelperTest extends KernelTestCase
 {
@@ -16,14 +15,9 @@ class DownloadHelperTest extends KernelTestCase
     public function testGetUploadPath(){
 
         $uploadDirData = 'upload/files/';
-        $fileData = 'AZERT1234';
+        $fileData = 'test.jpg';
 
-        $parameterBagInterface = $this->createMock(ParameterBagInterface::class);
-        $parameterBagInterface->expects($this->once())
-            ->method('get')
-            ->willReturn($uploadDirData);
-
-        $downloadHelper = new DownloadHelper($parameterBagInterface);
+        $downloadHelper = new DownloadHelper('upload/files/');
 
         $fileTest = new TestFile();
         $fileTest->setFile($fileData);
